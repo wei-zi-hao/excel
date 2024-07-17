@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增报名表')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-form-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">表单标题：</label>
+                <div class="col-sm-8">
+                    <input id="formTitleId" name="formTitle" class="form-control" type="text"  maxlength="50" required autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">表单报名开始时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input id="formStartTime" name="formStartTime" class="form-control" placeholder="yyyy-MM-dd hh:mm:ss" type="text" required autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">表单报名结束时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input id="formStopTime" name="formStopTime" class="form-control" placeholder="yyyy-MM-dd hh:mm:ss" type="text" required autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">表单css：</label>
+                <div class="col-sm-8">
+                    <textarea id="formCss" name="formCss" class="form-control" autocomplete="off" style="height: 150px;" placeholder="#formContainer form h3{ display:none;}"></textarea>
+                </div>
+
+            </div>
+
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">表单是否引用bootstarp：</label>
+                <div class="col-sm-8" id="formStrap">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('form_yes_no')}">
+                        <input type="radio" th:id="${'formStrap_' + dict.dictCode}" name="formStrap" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                        <label th:for="${'formStrap_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">表单是否启用验证码：</label>
+                <div class="col-sm-8" id="formNote">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('form_yes_no')}">
+                        <input type="radio" th:id="${'formNote_' + dict.dictCode}" name="formNote" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                        <label th:for="${'formNote_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">表单验证码类型：</label>
+                <div class="col-sm-8" id="formNoteType">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('form_note_type')}">
+                        <input type="radio" th:id="${'formNoteType_' + dict.dictCode}" name="formNoteType" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                        <label th:for="${'formNoteType_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">提交成功后提示语：</label>
+                <div class="col-sm-8" >
+                    <input id="successMessageId" name="formSuccess" class="form-control" type="text" placeholder="您的提交已成功保存！将会有专人联系确认，谢谢。">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">提交按钮文字：</label>
+                <div class="col-sm-8" >
+                    <input id="formButtonId" name="formButton" class="form-control" type="text" placeholder="提交">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">表单是否可重复提交：</label>
+                <div class="col-sm-8" id="formRepeat">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('form_yes_no')}">
+                        <input type="radio" th:id="${'formRepeat_' + dict.dictCode}" name="formRepeat" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                        <label th:for="${'formRepeat_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">提交后跳转链接：</label>
+                <div class="col-sm-8" >
+                    <input id="formHrefId" name="formHref" class="form-control" type="text" placeholder="默认为空则不跳转">
+                </div>
+            </div>
+        </form>
+
+
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button type="button" class="btn btn-primary">1</button>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>文本名称</label> <input type='text'
+                                                           class='form-control fieldText' placeholder='例如：姓名/电话'>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>是否必填</label> <select class="form-control isRequire">
+                            <option value="true">是</option>
+                            <option value="false" selected="selected">否</option>
+                        </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>类型</label> <select class="form-control specialType">
+                            <option value="h4">h4</option>
+                            <option value="text" selected="selected">text</option>
+                            <option value="int">int</option>
+                            <option value="phone">phone</option>
+                            <option value="email">email</option>
+                            <option value="radio">radio</option>
+                            <option value="checkbox">checkbox</option>
+                            <option value="select">select</option>
+                            <option value="textarea">textarea</option>
+                            <option value="photo">photo</option>
+                            <option value="file">file</option>
+                        </select>
+                        </div>
+                        <div class="col-sm-2" ></div>
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button type="button" class="btn btn-info"
+                                    data-toggle="collapse" data-parent="#accordion"
+                                    data-target="#collapse1">
+                                <i class="fa fa-fw fa-unsorted"></i>
+                            </button>
+                        </div>
+
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button id="addPanel" type="button" class="btn btn-success">
+                                <i class="fa fa-fw fa-plus-circle"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button id="removePanel" type="button" class="btn btn-danger">
+                                <i class='fa fa-fw fa-minus-circle'></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <label>普通文本框类型</label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="collapseExample" class="hide">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button type="button" class="btn btn-primary">button1</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>文本名称</label> <input type='text'
+                                                           class='form-control fieldText' placeholder='例如：姓名/电话'>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>是否必填</label> <select class="form-control isRequire">
+                            <option value="true">是</option>
+                            <option value="false" selected="selected">否</option>
+
+                        </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>类型</label> <select class="form-control specialType">
+                            <option value="h4">h4</option>
+                            <option value="text" selected="selected">text</option>
+                            <option value="int">int</option>
+                            <option value="phone">phone</option>
+                            <option value="email">email</option>
+                            <option value="radio">radio</option>
+                            <option value="checkbox">checkbox</option>
+                            <option value="select">select</option>
+                            <option value="textarea">textarea</option>
+                            <option value="photo">photo</option>
+                            <option value="file">file</option>
+                        </select>
+                        </div>
+                        <div class="col-sm-2" ></div>
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button type="button" class="btn btn-info" data-toggle="collapse"
+                                    data-parent="#accordion" data-target="#collapse2">
+                                <i class="fa fa-fw fa-unsorted"></i>
+                            </button>
+                        </div>
+
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button id="addPanel" type="button" class="btn btn-success">
+                                <i class="fa fa-fw fa-plus-circle"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button id="removePanel" type="button" class="btn btn-danger">
+                                <i class='fa fa-fw fa-minus-circle'></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="collapse2" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <label>普通文本框类型</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/form";
+
+        $(function() {
+            // 点击改变panel-body里面的内容
+            $("#accordion").on("change", ".specialType", changePanelBody).on(
+                "click", "#addPanel", addPanel).on("click", "#removePanel",
+                removePanel).on("click", ".remove-option", removeOption).on(
+                "click", ".add-option", addOption).on("blur",
+                "input[type='text']", changeInputState);
+        });
+
+        //表单详细校验规则
+        $("#form-form-add").validate({
+            onkeyup: false,
+            rules:{
+                formTitle:{
+                    minlength: 1,
+                    maxlength: 50,
+                    remote: {
+                        url: prefix + "/checkFormTitleUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "formTitle": function() {
+                                return $.common.trim($("#formTitleId").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                },
+                formHref:{
+                    maxlength: 450,
+                    url:true
+                }
+            },
+            messages: {
+                "formTitle": {
+                    remote: "表单标题已经存在"
+                }
+
+            },
+            focusCleanup: true
+        });
+
+
+
+
+        function ss() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-form-add').serialize());
+            }
+        }
+
+
+        $("input[name='formStartTime']").datetimepicker({
+            format: "yyyy-mm-dd hh:mm:ss",
+            minView: 1,
+            todayBtn:"linked",
+            autoclose: true
+        }).on('changeDate', function(ev){
+            var startDate = ev.date;
+            $("input[name='formStopTime']").datetimepicker('setStartDate', startDate);
+        });
+
+        $("input[name='formStopTime']").datetimepicker({
+            format: "yyyy-mm-dd hh:mm:ss",
+            minView: 1,
+            todayBtn:"linked",
+            autoclose: true
+        }).on('changeDate', function(ev){
+            var endDate = ev.date;
+            $("input[name='formStartTime']").datetimepicker('setEndDate', endDate);
+        });
+
+
+        function addOption() {
+            var length = $(this).parent(".panel-body").children("div").length;
+            var option = "<div class='form-group'>"
+                + "<label>选项1</label>"
+                + "<button type='button' class='btn btn-danger btn-xs remove-option' style='margin-left: 5%;'><i class='fa fa-fw fa-minus-circle'></i></button>"
+                + " <input type='text'class='form-control fieldOption' style='width:50%'>"
+                + "</div>";
+            option = option.replace("选项1", "选项" + (length + 1));
+
+            $(this).before(option);
+
+        }
+        // 先改变编号 再移除元素
+        function removeOption() {
+            var divLength = $(this).parents(".panel-body").find("label").length;
+            if (divLength > 2) {
+                var labelText = $(this).prev("label").text();
+                var i = 1;
+                var labels = $(this).parents(".panel-body").find("label");
+                labels.each(function() {
+                    if ($(this).text() == labelText) {
+                        return true;
+                    }
+                    $(this).text("选项" + i);
+                    i++;
+                })
+                $(this).parent("div").remove();
+            } else {
+                $.modal.alertError("最低保留两个选项");
+                
+            }
+        }
+
+        function removePanel() {
+            var length = $("#accordion").find(".panel").length;
+            if (length < 2) {
+                $.modal.alertError("最低保留一个字段");
+                return;
+            }
+            $(this).parents(".panel").remove();
+            $(".panel:visible").each(
+                function(i) {
+                    $(this).find(".btn-primary:first").text(i + 1);
+                    $(this).find(".btn-info:first").attr("data-target",
+                        "#collapse" + (i + 1));
+                    $(this).find(".panel-collapse").attr("id",
+                        "collapse" + (i + 1));
+                })
+        }
+
+        function addPanel() {
+            var length = $("#accordion").children(".panel").length;
+            var collapseExample = $("#collapseExample").html();
+            var regx = new RegExp("collapse2", "g");
+            collapseExample = collapseExample.replace(regx,
+                "collapse" + (length + 1)).replace("button1", length + 1);
+
+            $(this).parents(".panel").after(collapseExample);
+            $(".panel:visible").each(
+                function(i) {
+                    $(this).find(".btn-primary:first").text(i + 1);
+                    $(this).find(".btn-info:first").attr("data-target",
+                        "#collapse" + (i + 1));
+                    $(this).find(".panel-collapse").attr("id",
+                        "collapse" + (i + 1));
+                })
+
+        }
+
+        function changePanelBody() {
+            var value = $(this).val();
+            var textHtml = "<label>普通文本框类型</label>";
+            var intHtml = "<label>数字类型</label>";
+            var emailHtml = "<label>邮箱类型</label>";
+            var phoneHtml = "<label>手机、电话类型</label>";
+
+            var panelBody = $(this).parents(".panel").find(".panel-body");
+            var fieldText = $(this).parents(".panel").find(".fieldText");
+            var radioHtml = "<div class='form-group'>"
+                + "<label>选项1</label>"
+                + "<button type='button' class='btn btn-danger btn-xs remove-option' style='margin-left: 5%;'><i class='fa fa-fw fa-minus-circle'></i></button>"
+                + " <input type='text'class='form-control fieldOption' style='width:50%'>"
+                + "</div>"
+                + "<div class='form-group'>"
+                + "<label>选项2</label>"
+                + "<button type='button' class='btn btn-danger btn-xs remove-option' style='margin-left: 5%;'><i class='fa fa-fw fa-minus-circle'></i></button>"
+                + " <input type='text'class='form-control fieldOption' style='width:50%'>"
+                + "</div>"
+                + "<button type='button' class='btn btn-info add-option' style='margin-top: 20px'>"
+                + "<i class='fa fa-fw fa-plus-circle'></i>添加</button>";
+
+            if (value == "text") {
+                panelBody.html(textHtml);
+                fieldText.attr("placeholder", "例如:姓名");
+            } else if (value == "email") {
+                panelBody.html(emailHtml);
+                fieldText.attr("placeholder", "例如:邮箱");
+            } else if (value == "phone") {
+                panelBody.html(phoneHtml);
+                fieldText.attr("placeholder", "例如:手机/电话");
+            } else if (value == "int") {
+                panelBody.html(intHtml);
+                fieldText.attr("placeholder", "例如:年龄");
+            } else if (value == "textarea") {
+                panelBody.html("<label>文本域类型</label>");
+                fieldText.attr("placeholder", "例如:补充信息/备注");
+            } else if (value == "h4") {
+                panelBody.html("<label>h4标签</label>");
+                fieldText.attr("placeholder", "例如:标题名称");
+            }else if (value == "photo") {
+                panelBody.html("<label>图片类型</label>");
+                fieldText.attr("placeholder", "例如:上传图片");
+            }else if (value == "file") {
+                panelBody.html("<label>文件类型</label>");
+                fieldText.attr("placeholder", "例如:上传文件");
+            }else {
+                if (panelBody.find("input").length == 0) {
+                    fieldText.attr("placeholder", "例如:文本描述");
+                    panelBody.html(radioHtml);
+                }
+            }
+            // 如果处于关闭状态   就展开编辑界面
+            if (!$(this).parents(".panel").find(".panel-collapse").hasClass("in")) {
+
+                $(this).parents(".panel").find(".btn-info:eq(0)").click();
+
+            }
+
+        }
+
+        function submitHandler() {
+            if (!$.validate.form()) {
+                return;
+            }
+            // 标记
+            var flag = true;
+            // 错误信息
+            var errorMessage = "";
+
+            // 获取表单名称
+            var formTitle = $("#formTitleId").val().trim();
+
+            // 获取提交成功后提示文字
+            var successMessage = $("#successMessageId").val().trim();
+            if (successMessage == "") {
+                successMessage = "您的提交已成功保存！将会有专人联系确认，谢谢。";
+            }
+            // 获取css
+            var formCss = $("#formCss").val().trim();
+            if (formCss == "") {
+                formCss = "#formContainer form h3{ display:none;}"
+            }
+
+            // 获取提交按钮文字
+            var formButton = $("#formButtonId").val().trim();
+            if (formButton == "") {
+                formButton = "提交";
+            }
+
+            // 获取时间范围 输入框的内容
+            var formStartTime = $("#formStartTime").val();
+            var formStopTime = $("#formStopTime").val();
+            var formStrap = $("#formStrap").find(":checked").val();
+            var formNote = $("#formNote").find(":checked").val();
+            var formNoteType = $("#formNoteType").find(":checked").val();
+            var formRepeat= $("#formRepeat").find(":checked").val();
+            var formHref = $("#formHrefId").val();
+
+            // 获取编辑表单全部数据
+            var formDatas = new Array();
+
+            $("#accordion .panel").each(
+                function(i) {
+                    var panel = $(this);
+                    // 当前panel的全部数据
+                    var formData = {};
+                    var fieldTextValTrim = "";
+
+                    // 选项的数据
+                    var fieldOptionList = new Array();
+
+
+                    var fieldNameValTrim = "element_" + i;
+
+                    var fieldTypeVal = "";
+
+                    var specialTypeVal = $(this).find(".specialType").val();
+                    if(specialTypeVal=="h4"){
+                        fieldNameValTrim= "h4_"+i;
+                    }
+
+
+                    if (specialTypeVal == "textarea") {
+                        fieldTypeVal = "varchar(5000)";
+                    } else {
+                        fieldTypeVal = "varchar(500)";
+                    }
+
+                    var isRequireVal = $(this).find(".isRequire").val();
+
+                    fieldTextValTrim = $(this).find(".fieldText").val().trim();
+
+                    if (fieldTextValTrim == "") {
+                        flag = false;
+                        errorMessage = "文本名称不能为空. ";
+                        panel.css("border-color", "red");
+                        return false;
+                    } else {
+                        panel.css("border-color", "");
+                    }
+                    if (!(/^[^,]*$/.test(fieldTextValTrim))) {
+                        flag = false;
+                        errorMessage = "文本名称不能输入英文逗号【,】 可用中文逗号【，】代替";
+                        panel.css("border-color", "red");
+                        return false;
+                    } else {
+                        panel.css("border-color", "");
+                    }
+
+                    if (specialTypeVal == "radio"
+                        || specialTypeVal == "checkbox"
+                        || specialTypeVal == "select") {
+                        $(this).find(".fieldOption").each(function() {
+                            if ($(this).val().trim() == "") {
+                                flag = false;
+                                errorMessage = "选项不能为空,请展开查看.";
+                                panel.css("border-color", "red");
+                                return false;
+                            }
+                            panel.css("border-color", "");
+                            fieldOptionList.push($(this).val().trim())
+                        })
+                    }
+
+                    formData.fieldName = fieldNameValTrim;
+                    formData.fieldType = fieldTypeVal;
+                    formData.isRequire = isRequireVal;
+                    formData.specialType = specialTypeVal;
+                    formData.fieldText = fieldTextValTrim;
+                    formData.fieldOptionList = fieldOptionList;
+
+                    formDatas.push(formData);
+
+                })
+
+            var jsonToString = JSON.stringify(formDatas);
+
+            if (!flag) {
+                $.modal.alertError(errorMessage);
+                return;
+            }
+
+
+
+            var fieldTextList = new Array();
+            var fieldNameList = new Array();
+            var fieldTypeList = new Array();
+
+            for ( var i in formDatas) {
+                if(formDatas[i].specialType == "h4"){
+                    fieldNameList.push(formDatas[i].fieldName);
+                    fieldTypeList.push(formDatas[i].fieldType);
+                }else{
+                    fieldTextList.push(formDatas[i].fieldText);
+                    fieldNameList.push(formDatas[i].fieldName);
+                    fieldTypeList.push(formDatas[i].fieldType);
+                }
+            }
+            // 传递到后台的参数
+            var params = {};
+
+            //报名表名称
+            params.formTitle = formTitle;
+            //提交成功后文字
+            params.formSuccess = successMessage;
+            //css
+            params.formCss = formCss;
+            //提交按钮文字
+            params.formButton = formButton;
+
+            //报名表各个字段描述
+            fieldTextList.push("来源地址");
+            fieldTextList.push("提交时间");
+            fieldTextList.push("ip");
+
+            params.formField= fieldTextList.toString();
+            params.fieldNameList = fieldNameList.toString();
+            params.fieldTypeList = fieldTypeList.toString();
+            params.formStartTime = formStartTime;
+            params.formStopTime = formStopTime;
+            params.formStrap = formStrap;
+            params.formNote = formNote;
+            params.formNoteType = formNoteType;
+            params.formRepeat = formRepeat;
+            params.formHref = formHref;
+            var formHtml = editFormHtml(formTitle, formDatas,formNote,formNoteType);
+            params.formHtml = formHtml;
+            params.formJson = jsonToString;
+
+
+            console.log(params);
+            $.operate.save(prefix + "/add", params);
+        }
+
+        function editFormHtml(formTitle, formDatas,formNote,formNoteType) {
+
+
+            var htmlContent = "<form><h3>"
+                + formTitle + "</h3>";
+            for ( var i in formDatas) {
+                var ifHide = true;
+                if (formDatas[i].isRequire == "false") {
+                    ifHide = false;
+                }
+                if (formDatas[i].specialType == "h4") {
+                    htmlContent += "<h4>"+ formDatas[i].fieldText + "</h4>";
+                }
+                if (formDatas[i].specialType == "text") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='varchar' type='text' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "photo") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='photo' type='file'  id='"
+                        + formDatas[i].fieldName + "'>"
+                        +"<img  style='margin-top: 10px;width: auto;height: auto;max-width: 100%;max-height: 100%;' src=''>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "file") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='file' type='file'  id='"
+                        + formDatas[i].fieldName + "'>"
+                        +"<input  style='display:none;'>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "int") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='int'  type='text' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "phone") {
+
+
+
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='phone'  type='text' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</div>";
+
+                }
+                if (formDatas[i].specialType == "email") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='email'  type='text' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "textarea") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<textarea  rows='3' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</textarea>" + "</div>";
+                }
+                if (formDatas[i].specialType == "radio") {
+                    htmlContent += "<div class='form-group'><label class='labelText'>"
+                        + formDatas[i].fieldText
+                        + "</label>"
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "<div class='radio'>";
+                    for ( var j in formDatas[i].fieldOptionList) {
+                        htmlContent += "<label>"
+                            + "<input type='radio' name='"+ formDatas[i].fieldName +"'  value='"+ formDatas[i].fieldOptionList[j]+"'>"
+                            + formDatas[i].fieldOptionList[j]
+                            + "</label>";
+                    }
+                    htmlContent += "</div></div>";
+                }
+
+                if (formDatas[i].specialType == "checkbox") {
+                    htmlContent += "<div class='form-group'><label class='labelText'>"
+                        + formDatas[i].fieldText
+                        + "</label>"
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "<div class='checkbox'>";
+                    for ( var j in formDatas[i].fieldOptionList) {
+                        htmlContent += "<label>"
+                            + "<input type='checkbox' name='"+ formDatas[i].fieldName +"'  value='"+ formDatas[i].fieldOptionList[j]+"'>"
+                            + formDatas[i].fieldOptionList[j]
+                             + "</label>";
+                    }
+                    htmlContent += "</div></div>";
+                }
+                if (formDatas[i].specialType == "select") {
+                    htmlContent += "<div class='form-group'><label class='labelText'>"
+                        + formDatas[i].fieldText
+                        + "</label>"
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "<select class='form-control' id='"+formDatas[i].fieldName+"' >";
+                    for ( var j in formDatas[i].fieldOptionList) {
+                        htmlContent += "<option value='"+formDatas[i].fieldOptionList[j]+"'>"
+                            + formDatas[i].fieldOptionList[j] + "</option>";
+                    }
+                    htmlContent += "</select></div>";
+                }
+
+            }
+            htmlContent +=  "<button type='button'  class='btn btn-primary btn-submit' >提交</button>"
+                + "</form>";
+            return htmlContent;
+        }
+
+        function changeUseNoteType(){
+            if($("#useNote").val() == 1){
+                $("#useNoteType").attr("disabled",false);
+            }else{
+                $("#useNoteType").attr("disabled",true);
+            }
+        }
+
+        function changeInputState() {
+            if (!$(this).val().trim()) {
+                $(this).parent("div").attr("class", "form-group has-error");
+            } else {
+                $(this).parent("div").attr("class", "form-group");
+            }
+
+        }
+    </script>
+</body>
+</html>

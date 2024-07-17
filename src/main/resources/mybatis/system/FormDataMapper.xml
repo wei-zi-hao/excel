@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ek.project.system.form.mapper.FormDataMapper">
+    
+    <resultMap type="FormInfo" id="FormInfoResult">
+        <result property="id"    column="id"    />
+        <result property="formTitle"    column="form_title"    />
+        <result property="formName"    column="form_name"    />
+        <result property="formField"    column="form_field"    />
+        <result property="formStartTime"    column="form_start_time"    />
+        <result property="formStopTime"    column="form_stop_time"    />
+        <result property="formHtml"    column="form_html"    />
+        <result property="formMail"    column="form_mail"    />
+        <result property="formJson"    column="form_json"    />
+        <result property="formTheme"    column="form_theme"    />
+        <result property="formCss"    column="form_css"    />
+        <result property="formStrap"    column="form_strap"    />
+        <result property="formSuccess"    column="form_success"    />
+        <result property="formButton"    column="form_button"    />
+        <result property="formNote"    column="form_note"    />
+        <result property="formNoteType"    column="form_note_type"    />
+        <result property="formRepeat"    column="form_repeat"    />
+        <result property="formHref"    column="form_href"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectFormInfoVo">
+        select id, form_title, form_name, form_field, form_start_time, form_stop_time, form_html, form_mail, form_json, form_theme, form_css, form_strap, form_success, form_button,form_note,form_note_type, create_by, create_time, update_by, update_time from form_info
+    </sql>
+
+
+
+
+    <select id="findFormInfoByFormName" resultMap="FormInfoResult">
+            select id,form_css,form_strap,form_html,form_strap,form_success,form_button,form_note,form_note_type,form_repeat,form_href,form_start_time,form_stop_time from form_info where form_name = #{formName}
+    </select>
+
+    <select id="findFormInfoAllByFormName" resultMap="FormInfoResult">
+        select * from form_info where form_name = #{formName}
+    </select>
+
+
+    <insert id="insertDataByFormName">
+        insert into ${formName} (
+        <foreach collection="mapData.entrySet()" index="key" item="value" separator=",">
+            ${key}
+        </foreach>
+        ,insert_time,ip)values(
+        <foreach collection="mapData.entrySet()"  index="key" item="value" separator=",">
+            #{value}
+        </foreach>
+        ,now(),#{ipAddr} )
+
+    </insert>
+
+    <insert id="saveNoteVerify">
+        insert into note_verify
+            (ip,phone,last_time,verify_number)
+        values
+            (#{ip},#{phone},now(),#{verifyNumber})
+    </insert>
+
+    <select id="selectVerifyTimeByPhone" resultType="string">
+        select last_time from note_verify where phone = #{phone} order by last_time desc limit 0,1
+    </select>
+
+    <select id="selectVerifyTimeByIP" resultType="int">
+        select count(*) from note_verify where ip = #{ip} and last_time >#{time}
+    </select>
+
+    <insert id="saveVerifyNumber">
+        insert into note_verify
+            (verify_number)
+        values
+            (#{verifyNumber})
+    </insert>
+
+    <select id="verifyNum" resultType="string">
+        select verify_number from note_verify where phone = #{phone} order by last_time desc  limit 0,1
+    </select>
+
+    <select id="findRepeatPhoneByFormName" resultType="java.lang.Integer">
+        select count(*) from ${formName} where ${phoneField} = #{repeatPhone}
+    </select>
+
+</mapper>

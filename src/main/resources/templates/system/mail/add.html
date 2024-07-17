@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增邮箱')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-mail-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">邮箱账号：</label>
+                <div class="col-sm-8">
+                    <input id="mailAccount" name="mailAccount" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/mail"
+
+        $("#form-mail-add").validate({
+            onkeyup: false,
+            rules:{
+                mailAccount:{
+                    email:true,
+                    remote: {
+                        url: prefix + "/checkMailAccountUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "mailAccount": function() {
+                                return $.common.trim($("#mailAccount").val());
+                            }
+                        },
+                        dataFilter: function (data, type) {
+                            return $.validate.unique(data);
+                        }
+                    }
+                },
+
+            },
+            messages: {
+                "mailAccount": {
+                    remote: "邮箱账号已经存在"
+                }
+            },
+            focusCleanup: true
+        });
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-mail-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

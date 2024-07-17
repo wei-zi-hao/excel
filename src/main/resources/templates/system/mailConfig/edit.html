@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改邮箱配置')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-mailConfig-edit" th:object="${mailConfig}">
+
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">stmp地址：</label>
+                <div class="col-sm-8">
+                    <input name="smtpAdress" th:field="*{smtpAdress}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">stmp端口：</label>
+                <div class="col-sm-8">
+                    <input name="smtpPort" th:field="*{smtpPort}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">stmp邮箱：</label>
+                <div class="col-sm-8">
+                    <input name="sendMail" th:field="*{sendMail}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">授权码：</label>
+                <div class="col-sm-8">
+                    <input name="authCode" th:field="*{authCode}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">发送人名称：</label>
+                <div class="col-sm-8">
+                    <input name="sendName" th:field="*{sendName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">发送模式：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('mail_send_type')}">
+                        <input type="radio" th:id="${'sendStyle_' + dict.dictCode}" name="sendStyle" th:value="${dict.dictValue}" th:field="*{sendStyle}" required>
+                        <label th:for="${'sendStyle_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/mailConfig";
+        $("#form-mailConfig-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-mailConfig-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

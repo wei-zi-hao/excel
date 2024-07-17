@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改报名表')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+
+
+
+        <div class="panel-group" id="accordion">
+
+
+        </div>
+
+        <div id="collapseExample" class="hide">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button type="button" class="btn btn-primary">1</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>文本名称</label> <input type='text'
+                                                           class='form-control fieldText' placeholder='例如：姓名/电话'>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>是否必填</label> <select class="form-control isRequire">
+                            <option value="true">是</option>
+                            <option value="false" selected="selected">否</option>
+
+                        </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label>类型</label> <select class="form-control specialType">
+                            <option value="h4">h4</option>
+                            <option value="text" selected="selected">text</option>
+                            <option value="int">int</option>
+                            <option value="phone">phone</option>
+                            <option value="email">email</option>
+                            <option value="radio">radio</option>
+                            <option value="checkbox">checkbox</option>
+                            <option value="select">select</option>
+                            <option value="textarea">textarea</option>
+                            <option value="photo">photo</option>
+                            <option value="file">file</option>
+                        </select>
+                        </div>
+                        <div class="col-sm-2" ></div>
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button type="button" class="btn btn-info" data-toggle="collapse"
+                                    data-parent="#accordion" data-target="#collapse2">
+                                <i class="fa fa-fw fa-unsorted"></i>
+                            </button>
+                        </div>
+
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button id="addPanel" type="button" class="btn btn-success">
+                                <i class="fa fa-fw fa-plus-circle"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-1" style="padding-top: 15px;">
+                            <button id="removePanel" type="button" class="btn btn-danger">
+                                <i class='fa fa-fw fa-minus-circle'></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="collapse2" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <label>普通文本框类型</label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+
+                    <small class="font-bold"></small>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>文本名称</label> <input type='text'
+                                                               class='form-control fieldText' placeholder='例如：姓名/电话'>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>是否必填</label> <select class="form-control isRequire">
+                                <option value="true">是</option>
+                                <option value="false" selected="selected">否</option>
+
+                            </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>类型</label> <select class="form-control specialType">
+                                <option value="h4">h4</option>
+                                <option value="text" selected="selected">text</option>
+                                <option value="int">int</option>
+                                <option value="phone">phone</option>
+                                <option value="email">email</option>
+                                <option value="radio">radio</option>
+                                <option value="checkbox">checkbox</option>
+                                <option value="select">select</option>
+                                <option value="textarea">textarea</option>
+                                <option value="photo">photo</option>
+                                <option value="file">file</option>
+                            </select>
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+                    </div>
+                    <div id="collapseX" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <label>普通文本框类型</label>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="addField()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script type="text/javascript">
+        var prefix = ctx + "system/form";
+        var formJson = [(${formInfo.formJson})];
+        var formId = [(${formInfo.id})];
+        var formTitle = '[[${formInfo.formTitle}]]';
+        var formName = '[[${formInfo.formName}]]';
+
+
+
+        var collapseExample = $("#collapseExample").html();
+        $(function() {
+            // 添加点击事件
+            $("#accordion").on("change", ".specialType", changePanelBody).on(
+                "click", "#addPanel", addPanel).on("click", "#removePanel",
+                removePanel).on("click", ".remove-option", removeOption).on(
+                "click", ".add-option", addOption).on("blur",
+                "input[type='text']", changeInputState);
+
+            $("#myModal").on("change", ".specialType", changePanelBody).on("click", ".remove-option", removeOption).on(
+                "click", ".add-option", addOption).on("blur",
+                "input[type='text']", changeInputState);
+
+            //还原表单结构跟数据
+            $.each(formJson, function(index, obj) {
+                $("#accordion").append(collapseExample);
+                let panel =$("#accordion").children().last();
+                panel.find(".btn-primary:first").text(index + 1);
+                panel.find(".btn-info:first").attr("data-target",
+                    "#collapse" + (index + 1));
+                panel.find(".panel-collapse").attr("id",
+                    "collapse" + (index + 1));
+
+                if(obj.specialType=="h4"){
+                    panel.find(".specialType").attr("disabled", "disabled");
+                }
+                panel.find("option").each(function(){
+                    if($(this).text()=="h4"){
+                        $(this).attr("disabled","true");
+                    }
+                })
+
+                panel.data("columnName",obj.fieldName);
+                panel.find(".fieldText").val(obj.fieldText);
+                panel.find(".isRequire").val(obj.isRequire);
+                panel.find(".specialType").val(obj.specialType);
+                if(obj.fieldOptionList.length>0){
+                    panel.find(".panel-body").empty();
+                    $.each(obj.fieldOptionList, function(index, obj) {
+                        let option = "<div class='form-group'>"
+                            + "<label>选项1</label>"
+                            + "<button type='button' class='btn btn-danger btn-xs remove-option' style='margin-left: 5%;'><i class='fa fa-fw fa-minus-circle'></i></button>"
+                            + " <input type='text'class='form-control fieldOption' style='width:50%' value>"
+                            + "</div>";
+                        option = option.replace("选项1", "选项" + (index + 1)).replace("value","value="+obj);
+
+                        panel.find(".panel-body").append(option);
+                    })
+                    panel.find(".panel-body").append("<button type='button' class='btn btn-info add-option' style='margin-top: 20px'>"
+                        + "<i class='fa fa-fw fa-plus-circle'></i>添加</button>");
+                }
+                if (panel.find(".fieldOption").length > 0) {
+                    panel.find(".fieldOption").each(function(j) {
+                        $(this).val(obj.fieldOptionList[j])
+                    })
+                }
+            });
+
+        });
+
+
+
+
+        function addOption() {
+            var length = $(this).parent(".panel-body").children("div").length;
+            var option = "<div class='form-group'>"
+                + "<label>选项1</label>"
+                + "<button type='button' class='btn btn-danger btn-xs remove-option' style='margin-left: 5%;'><i class='fa fa-fw fa-minus-circle'></i></button>"
+                + " <input type='text'class='form-control fieldOption' style='width:50%'>"
+                + "</div>";
+            option = option.replace("选项1", "选项" + (length + 1));
+
+            $(this).before(option);
+
+        }
+        // 先改变编号 再移除元素
+        function removeOption() {
+            var divLength = $(this).parents(".panel-body").find("label").length;
+            if (divLength > 2) {
+                var labelText = $(this).prev("label").text();
+                var i = 1;
+                var labels = $(this).parents(".panel-body").find("label");
+                labels.each(function() {
+                    if ($(this).text() == labelText) {
+                        return true;
+                    }
+                    $(this).text("选项" + i);
+                    i++;
+                })
+                $(this).parent("div").remove();
+            } else {
+               $.modal.alertError("最低保留两个选项");
+
+            }
+        }
+
+        function removePanel() {
+
+            var that = $(this);
+            //删除这个panel之前获取当前字段的名称
+            var columnName = $(this).parents(".panel").data("columnName");
+
+            //校验panel
+            if(!valiPanel("remove")){
+                return;
+            }
+
+            $.modal.confirm("确定删除改字段？\n\n该操作会删除数据库中该字段的数据并且不可恢复。\n\n请谨慎操作！",function () {
+
+                //移除panel
+                that.parents(".panel").remove();
+                //纠正编号
+                $(".panel:visible").each(function(i) {
+                    $(this).find(".btn-primary:first").text(i + 1);
+                    $(this).find(".btn-info:first").attr("data-target",
+                        "#collapse" + (i + 1));
+                    $(this).find(".panel-collapse").attr("id",
+                        "collapse" + (i + 1));
+                })
+
+                // 获取编辑表单全部数据
+                var formDatas = getFormDatas();
+                // 获取中文字段参数
+                var fieldTextList = getFieldTextList(formDatas);
+
+                var params={};
+                params.id=formId;
+                params.formName=formName;
+                params.columnName=columnName;
+                params.formField=fieldTextList;
+                params.formHtml=editFormHtml(formTitle, formDatas);
+                params.formJson = JSON.stringify(formDatas);
+
+                $.operate.save(prefix + "/removeColumn", params);
+            });
+
+
+        }
+
+        function addPanel() {
+            //校验表单
+            if (!valiPanel("add")) {
+                return;
+            }
+
+            //显示模态框
+            $("#myModal").data("btn",$(this));
+            $("#myModal").modal("show");
+            var fieldText = $(this).parents(".panel").find(".fieldText").val().trim();
+            $("#myModal").find("small").text("在 【"+fieldText+"】 下面添加一个字段");
+        }
+
+        function addField() {
+            //校验模态框panel
+            if (!valiModalPanel()) {
+                return;
+            }
+
+            //隐藏模态框
+            $("#myModal").modal("hide");
+            //添加panel
+            $("#myModal").data("btn").parents(".panel").after($("#myModal .modal-body").html());
+
+
+            //赋值数据
+            var newElement = setPanelValue($("#myModal").data("btn").parents(".panel").next());
+
+            //校验Panel
+            if(!valiPanel()){
+                return;
+            }
+
+            // 获取编辑表单全部数据
+            var formDatas = getFormDatas();
+            // 中文字段
+            var fieldTextList = getFieldTextList(formDatas);
+
+            var oldElement = $("#myModal").data("btn").parents(".panel").data("columnName");
+            var params={};
+            params.id=formId;
+            params.formName=formName;
+            params.oldElement=oldElement;
+            params.newElement=newElement;
+            params.formField=fieldTextList;
+            params.formHtml=editFormHtml(formTitle,formDatas);
+            params.formJson = JSON.stringify(formDatas);
+            console.log(params);
+            $.operate.save(prefix + "/addColumn", params);
+        }
+
+        function setPanelValue(panel) {
+            var textName = $("#myModal .fieldText").val().trim();
+            var selectRequire = $("#myModal .isRequire").val();
+            var specialTypeVal = $("#myModal .specialType").val();
+            var fieldOptionList = new Array();
+            if (specialTypeVal == "radio"
+                || specialTypeVal == "checkbox"
+                || specialTypeVal == "select") {
+                $("#myModal").find(".fieldOption").each(function() {
+                    fieldOptionList.push($(this).val().trim())
+                })
+            }
+            //新元素名
+            var timestamp = (new Date()).getTime();
+            var newElement = "element_"+timestamp;
+            if(specialTypeVal=="h4"){
+                newElement = "h4_"+timestamp;
+            }
+
+            panel.data("columnName",newElement);
+            panel.find(".fieldText").val(textName);
+            panel.find(".isRequire").val(selectRequire);
+            panel.find(".specialType").val(specialTypeVal);
+
+            if (panel.find(".fieldOption").length > 0) {
+                panel.find(".fieldOption").each(function(j) {
+                    $(this).val(fieldOptionList[j])
+                })
+            }
+            return newElement;
+        }
+
+        function changePanelBody() {
+            log.log("sdasd")
+            var value = $(this).val();
+            var textHtml = "<label>普通文本框类型</label>";
+            var intHtml = "<label>数字类型</label>";
+            var emailHtml = "<label>邮箱类型</label>";
+            var phoneHtml = "<label>手机、电话类型</label>";
+
+            var panelBody = $(this).parents(".panel").find(".panel-body");
+            var fieldText = $(this).parents(".panel").find(".fieldText");
+            var radioHtml = "<div class='form-group'>"
+                + "<label>选项1</label>"
+                + "<button type='button' class='btn btn-danger btn-xs remove-option' style='margin-left: 5%;'><i class='fa fa-fw fa-minus-circle'></i></button>"
+                + " <input type='text'class='form-control fieldOption' style='width:50%'>"
+                + "</div>"
+                + "<div class='form-group'>"
+                + "<label>选项2</label>"
+                + "<button type='button' class='btn btn-danger btn-xs remove-option' style='margin-left: 5%;'><i class='fa fa-fw fa-minus-circle'></i></button>"
+                + " <input type='text'class='form-control fieldOption' style='width:50%'>"
+                + "</div>"
+                + "<button type='button' class='btn btn-info add-option' style='margin-top: 20px'>"
+                + "<i class='fa fa-fw fa-plus-circle'></i>添加</button>";
+
+            if (value == "text") {
+                panelBody.html(textHtml);
+                fieldText.attr("placeholder", "例如:姓名");
+            } else if (value == "email") {
+                panelBody.html(emailHtml);
+                fieldText.attr("placeholder", "例如:邮箱");
+            } else if (value == "phone") {
+                panelBody.html(phoneHtml);
+                fieldText.attr("placeholder", "例如:手机/电话");
+            } else if (value == "int") {
+                panelBody.html(intHtml);
+                fieldText.attr("placeholder", "例如:年龄");
+            } else if (value == "textarea") {
+                panelBody.html("<label>文本域类型</label>");
+                fieldText.attr("placeholder", "例如:补充信息/备注");
+            } else if (value == "h4") {
+                panelBody.html("<label>h4标签</label>");
+                fieldText.attr("placeholder", "例如:标题名称");
+            }else if (value == "photo") {
+                panelBody.html("<label>图片类型</label>");
+                fieldText.attr("placeholder", "例如:上传图片");
+            }else if (value == "file") {
+                panelBody.html("<label>文件类型</label>");
+                fieldText.attr("placeholder", "例如:上传文件");
+            }else {
+                if (panelBody.find("input").length == 0) {
+                    fieldText.attr("placeholder", "例如:文本描述");
+                    panelBody.html(radioHtml);
+                }
+            }
+            // 如果处于关闭状态   就展开编辑界面
+            if (!$(this).parents(".panel").find(".panel-collapse").hasClass("in")) {
+
+                $(this).parents(".panel").find(".btn-info:eq(0)").click();
+
+            }
+
+        }
+
+        function changeInputState() {
+            if (!$(this).val().trim()) {
+                $(this).parent("div").attr("class", "form-group has-error");
+            } else {
+                $(this).parent("div").attr("class", "form-group");
+            }
+
+        }
+
+        function editFormHtml(formTitle, formDatas) {
+
+
+            var htmlContent = "<form ><h3 >"
+                + formTitle + "</h3>";
+            for ( var i in formDatas) {
+                var ifHide = true;
+                if (formDatas[i].isRequire == "false") {
+                    ifHide = false;
+                }
+                if (formDatas[i].specialType == "h4") {
+                    htmlContent += "<h4>"+ formDatas[i].fieldText + "</h4>";
+                }
+                if (formDatas[i].specialType == "text") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='varchar' type='text' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "photo") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='photo' type='file'  id='"
+                        + formDatas[i].fieldName + "'>"
+                        +"<img  style='margin-top: 10px;width: auto;height: auto;max-width: 100%;max-height: 100%;' src=''>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "file") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='file' type='file'  id='"
+                        + formDatas[i].fieldName + "'>"
+                        +"<input  style='display:none;'>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "int") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='int'  type='text' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "phone") {
+
+
+
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='phone'  type='text' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</div>";
+
+
+                }
+                if (formDatas[i].specialType == "email") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<input  mark='email'  type='text' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</div>";
+                }
+                if (formDatas[i].specialType == "textarea") {
+                    htmlContent += "<div class='form-group'>"
+                        + "<label class='labelText' for='"+formDatas[i].fieldName+"'>"
+                        + ""
+                        + formDatas[i].fieldText
+                        + ""
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "</label>"
+                        + "<textarea  rows='3' class='form-control' id='"
+                        + formDatas[i].fieldName + "' placeholder='请输入"
+                        + formDatas[i].fieldText + "'>"
+                        + "</textarea>" + "</div>";
+                }
+                if (formDatas[i].specialType == "radio") {
+                    htmlContent += "<div class='form-group'><label class='labelText'>"
+                        + formDatas[i].fieldText
+                        + "</label>"
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "<div class='radio'>";
+                    for ( var j in formDatas[i].fieldOptionList) {
+                        htmlContent += "<label>"
+                            + "<input type='radio' name='"+ formDatas[i].fieldName +"'  value='"+ formDatas[i].fieldOptionList[j]+"'>"
+                            + formDatas[i].fieldOptionList[j]
+                            + "</label>";
+                    }
+                    htmlContent += "</div></div>";
+                }
+
+                if (formDatas[i].specialType == "checkbox") {
+                    htmlContent += "<div class='form-group'><label class='labelText'>"
+                        + formDatas[i].fieldText
+                        + "</label>"
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "<div class='checkbox'>";
+                    for ( var j in formDatas[i].fieldOptionList) {
+                        htmlContent += "<label>"
+                            + "<input type='checkbox' name='"+ formDatas[i].fieldName +"'  value='"+ formDatas[i].fieldOptionList[j]+"'>"
+                            + formDatas[i].fieldOptionList[j]
+                             + "</label>";
+                    }
+                    htmlContent += "</div></div>";
+                }
+                if (formDatas[i].specialType == "select") {
+                    htmlContent += "<div class='form-group'><label class='labelText'>"
+                        + formDatas[i].fieldText
+                        + "</label>"
+                        + (ifHide ? "<span style='color:red;'> *</span>" : "")
+                        + "<select class='form-control' id='"+formDatas[i].fieldName+"' >";
+                    for ( var j in formDatas[i].fieldOptionList) {
+                        htmlContent += "<option value='"+formDatas[i].fieldOptionList[j]+"'>"
+                            + formDatas[i].fieldOptionList[j] + "</option>";
+                    }
+                    htmlContent += "</select></div>";
+                }
+
+            }
+            htmlContent +=  "<button type='button'  class='btn btn-primary btn-submit' >提交</button>"
+                + "</form>";
+            return htmlContent;
+        }
+
+        function submitHandler() {
+            //校验Panel
+            if(!valiPanel()){
+                return;
+            }
+
+            // 获取编辑表单全部数据
+            var formDatas = getFormDatas();
+            // 中文字段
+            var fieldTextList = getFieldTextList(formDatas);
+
+            // 传递到后台的参数
+            var params = {};
+            params.formField = fieldTextList.toString();
+            // 根据获取的数据编辑表格
+            params.formHtml = editFormHtml(formTitle, formDatas);
+            params.formJson = JSON.stringify(formDatas);
+            params.id = formId;
+            $.operate.save(prefix + "/edit", params);
+        }
+
+        /**获取表单的json数据*/
+        function getFormDatas() {
+            var formDatas = new Array();
+            $("#accordion .panel").each(
+                function(i) {
+                    var panel = $(this);
+                    // 当前panel的全部数据
+                    var formData = {};
+                    var fieldTextValTrim = "";
+
+                    // 选项的数据
+                    var fieldOptionList = new Array();
+
+                    var fieldNameValTrim = panel.data("columnName");
+
+
+                    var fieldTypeVal = "";
+
+
+                    var specialTypeVal = $(this).find(".specialType").val();
+
+                    if (specialTypeVal == "textarea") {
+                        fieldTypeVal = "varchar(5000)";
+                    } else {
+                        fieldTypeVal = "varchar(500)";
+                    }
+
+                    var isRequireVal = $(this).find(".isRequire").val();
+
+                    fieldTextValTrim = $(this).find(".fieldText").val().trim();
+
+
+
+                    if (specialTypeVal == "radio"
+                        || specialTypeVal == "checkbox"
+                        || specialTypeVal == "select") {
+                        $(this).find(".fieldOption").each(function() {
+                            fieldOptionList.push($(this).val().trim())
+                        })
+                    }
+
+                    formData.fieldName = fieldNameValTrim;
+                    formData.fieldType = fieldTypeVal;
+                    formData.isRequire = isRequireVal;
+                    formData.specialType = specialTypeVal;
+                    formData.fieldText = fieldTextValTrim;
+                    formData.fieldOptionList = fieldOptionList;
+
+                    formDatas.push(formData);
+
+                })
+            return formDatas;
+        }
+        /**获取表单的中文字段数据*/
+        function getFieldTextList(formDatas) {
+            var fieldTextList = new Array();
+            for ( var i in formDatas) {
+                if(formDatas[i].specialType == "h4"){
+                    continue;
+                }
+                fieldTextList.push(formDatas[i].fieldText);
+            }
+            fieldTextList.push("来源地址");
+            fieldTextList.push("提交时间");
+            fieldTextList.push("ip");
+
+            return fieldTextList.toString();
+        }
+        /**校验panel*/
+        function valiPanel(type) {
+            var errorMessage="";
+            var flag = true;
+            $("#accordion .panel").each(
+                function(i) {
+                    var panel = $(this);
+
+                    //将禁用选项去除，不然获取不了值
+                    panel.find("option:disabled").removeAttr("disabled");
+
+                    var specialTypeVal = $(this).find(".specialType").val();
+
+                    fieldTextValTrim = $(this).find(".fieldText").val().trim();
+
+                    if (fieldTextValTrim == "") {
+                        flag = false;
+                        errorMessage = "文本名称不能为空. ";
+                        panel.css("border-color", "red");
+                        return false;
+                    } else {
+                        panel.css("border-color", "");
+                    }
+                    if (!(/^[^,]*$/.test(fieldTextValTrim))) {
+                        flag = false;
+                        errorMessage = "文本名称不能输入英文逗号【,】 可用中文逗号【，】代替";
+                        panel.css("border-color", "red");
+                        return false;
+                    } else {
+                        panel.css("border-color", "");
+                    }
+                    if (specialTypeVal == "radio"
+                        || specialTypeVal == "checkbox"
+                        || specialTypeVal == "select") {
+                        $(this).find(".fieldOption").each(function() {
+                            if ($(this).val().trim() == "") {
+                                flag = false;
+                                errorMessage = "选项不能为空,请展开查看.";
+                                panel.css("border-color", "red");
+                                return false;
+                            }
+                            panel.css("border-color", "");
+                        })
+                    }
+
+
+                })
+            if (!flag) {
+                $.modal.alertError(errorMessage);
+                return flag;
+            }
+
+            var length = $("#accordion").find(".panel").length;
+            if (length < 2 && "remove" == type) {
+                $.modal.alertError("最低保留一个字段.")
+                return false;
+            }
+
+            return flag;
+        }
+
+        /**校验模态框里的panel*/
+        function valiModalPanel() {
+            var errorMessage="";
+            var flag = true;
+            $("#myModal .panel").each(
+                function(i) {
+                    var panel = $(this);
+
+                    //将禁用选项去除，不然获取不了值
+                    panel.find("option:disabled").removeAttr("disabled");
+
+                    var specialTypeVal = $(this).find(".specialType").val();
+
+                    fieldTextValTrim = $(this).find(".fieldText").val().trim();
+
+                    if (fieldTextValTrim == "") {
+                        flag = false;
+                        errorMessage = "文本名称不能为空. ";
+                        panel.css("border-color", "red");
+                        return false;
+                    } else {
+                        panel.css("border-color", "");
+                    }
+                    if (!(/^[^,]*$/.test(fieldTextValTrim))) {
+                        flag = false;
+                        errorMessage = "文本名称不能输入英文逗号【,】 可用中文逗号【，】代替";
+                        panel.css("border-color", "red");
+                        return false;
+                    } else {
+                        panel.css("border-color", "");
+                    }
+                    if (specialTypeVal == "radio"
+                        || specialTypeVal == "checkbox"
+                        || specialTypeVal == "select") {
+                        $(this).find(".fieldOption").each(function() {
+                            if ($(this).val().trim() == "") {
+                                flag = false;
+                                errorMessage = "选项不能为空,请展开查看.";
+                                panel.css("border-color", "red");
+                                return false;
+                            }
+                            panel.css("border-color", "");
+                        })
+                    }
+
+
+                })
+            if (!flag) {
+                $.modal.alertError(errorMessage);
+                return flag;
+            }
+
+
+
+            return flag;
+        }
+
+    </script>
+</body>
+</html>

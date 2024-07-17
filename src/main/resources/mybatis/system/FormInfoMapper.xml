@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ek.project.system.form.mapper.FormInfoMapper">
+    
+    <resultMap type="FormInfo" id="FormInfoResult">
+        <result property="id"    column="id"    />
+        <result property="formTitle"    column="form_title"    />
+        <result property="formName"    column="form_name"    />
+        <result property="formField"    column="form_field"    />
+        <result property="formStartTime"    column="form_start_time"    />
+        <result property="formStopTime"    column="form_stop_time"    />
+        <result property="formHtml"    column="form_html"    />
+        <result property="formJson"    column="form_json"    />
+        <result property="formCss"    column="form_css"    />
+        <result property="formStrap"    column="form_strap"    />
+        <result property="formSuccess"    column="form_success"    />
+        <result property="formButton"    column="form_button"    />
+        <result property="formNote"    column="form_note"    />
+        <result property="formNoteType"    column="form_note_type"    />
+        <result property="formRepeat"    column="form_repeat"    />
+        <result property="formHref"    column="form_href"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectFormInfoVo">
+        select id, form_title, form_name, form_field, form_start_time, form_stop_time, form_html, form_json, form_css, form_strap, form_success,form_button, form_note,form_note_type,  form_repeat, form_href,create_by, create_time, update_by, update_time from form_info
+    </sql>
+
+    <select id="selectFormInfoList"  resultMap="FormInfoResult">
+        select f.id, f.form_title, f.form_name, f.form_start_time, f.form_stop_time,    f.create_by, f.create_time, f.update_by, f.update_time from form_info f
+        left join form_user fu on f.id = fu.form_info_id
+           where fu.user_id = #{userId}
+            <if test="formInfo.formTitle != null  and formInfo.formTitle != ''"> and f.form_title like concat('%', #{formInfo.formTitle}, '%')</if>
+
+
+    </select>
+    
+    <select id="selectFormInfoById" parameterType="Long" resultMap="FormInfoResult">
+        <include refid="selectFormInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="checkFormTitleUnique"  resultMap="FormInfoResult">
+        select * from form_info where form_title = #{formTitle}
+    </select>
+
+    <select id="findFormInfoByFormName" resultMap="FormInfoResult">
+            select form_css,form_strap,form_html,form_strap,form_success,form_button,form_note,form_note_type from form_info where form_name = #{formName}
+    </select>
+
+    <select id="selectFormColumn" resultType="java.lang.String" parameterType="String">
+        select COLUMN_NAME  from information_schema.COLUMNS where TABLE_NAME = #{formName}
+    </select>
+
+    <select id="selectformDataList" resultType="java.util.LinkedHashMap">
+        select * from ${formName}
+    </select>
+
+    <insert id="insertFormInfo" parameterType="FormInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into form_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="formTitle != null  and formTitle != ''">form_title,</if>
+            <if test="formName != null  and formName != ''">form_name,</if>
+            <if test="formField != null  and formField != ''">form_field,</if>
+            <if test="formStartTime != null ">form_start_time,</if>
+            <if test="formStopTime != null ">form_stop_time,</if>
+            <if test="formHtml != null  and formHtml != ''">form_html,</if>
+            <if test="formJson != null  and formJson != ''">form_json,</if>
+            <if test="formCss != null  and formCss != ''">form_css,</if>
+            <if test="formStrap != null ">form_strap,</if>
+            <if test="formSuccess != null  and formSuccess != ''">form_success,</if>
+            <if test="formButton != null  and formButton != ''">form_button,</if>
+            <if test="formNote != null ">form_note,</if>
+            <if test="formNoteType != null ">form_note_type,</if>
+            <if test="formRepeat != null ">form_repeat,</if>
+            <if test="formHref != null ">form_href,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="formTitle != null  and formTitle != ''">#{formTitle},</if>
+            <if test="formName != null  and formName != ''">#{formName},</if>
+            <if test="formField != null  and formField != ''">#{formField},</if>
+            <if test="formStartTime != null ">#{formStartTime},</if>
+            <if test="formStopTime != null ">#{formStopTime},</if>
+            <if test="formHtml != null  and formHtml != ''">#{formHtml},</if>
+            <if test="formJson != null  and formJson != ''">#{formJson},</if>
+            <if test="formCss != null  and formCss != ''">#{formCss},</if>
+            <if test="formStrap != null ">#{formStrap},</if>
+            <if test="formSuccess != null  and formSuccess != ''">#{formSuccess},</if>
+            <if test="formButton != null  and formButton != ''">#{formButton},</if>
+            <if test="formNote != null ">#{formNote},</if>
+            <if test="formNoteType != null ">#{formNoteType},</if>
+            <if test="formRepeat != null ">#{formRepeat},</if>
+            <if test="formHref != null ">#{formHref},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="addColumn">
+        ALTER TABLE ${formName}  ADD COLUMN ${newElement} VARCHAR(500) AFTER ${oldElement}
+    </update>
+
+    <!-- 创建表 -->
+    <update id="addTable" parameterType="map">
+        create table ${tableName} (
+        id int Primary key auto_increment,
+        <foreach collection="fieldMap.entrySet()" index="key" item="value" separator=",">
+            ${key} ${value}
+        </foreach>
+        ,source_url varchar(300),insert_time datetime,ip varchar(100)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+    </update>
+
+    <update id="updateFormInfo" parameterType="FormInfo">
+        update form_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="formTitle != null  and formTitle != ''">form_title = #{formTitle},</if>
+            <if test="formName != null  and formName != ''">form_name = #{formName},</if>
+            <if test="formField != null  and formField != ''">form_field = #{formField},</if>
+            <if test="formStartTime != null ">form_start_time = #{formStartTime},</if>
+            <if test="formStopTime != null ">form_stop_time = #{formStopTime},</if>
+            <if test="formHtml != null  and formHtml != ''">form_html = #{formHtml},</if>
+            <if test="formJson != null  and formJson != ''">form_json = #{formJson},</if>
+            <if test="formCss != null  and formCss != ''">form_css = #{formCss},</if>
+            <if test="formStrap != null ">form_strap = #{formStrap},</if>
+            <if test="formSuccess != null  and formSuccess != ''">form_success = #{formSuccess},</if>
+            <if test="formButton != null  and formButton != ''">form_button = #{formButton},</if>
+            <if test="formNote != null ">form_note = #{formNote},</if>
+            <if test="formNoteType != null ">form_note_type = #{formNoteType},</if>
+            <if test="formRepeat != null ">form_repeat = #{formRepeat},</if>
+            <if test="formHref != null ">form_href = #{formHref},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="removeColumn">
+        ALTER TABLE ${formName} DROP COLUMN ${columnName}
+    </update>
+
+    <delete id="deleteFormInfoById" parameterType="Long">
+        delete from form_info where id = #{id}
+    </delete>
+
+    <delete id="deleteFormInfoByIds" parameterType="String">
+        delete from form_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteFormDataByIds">
+        delete from ${formName} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

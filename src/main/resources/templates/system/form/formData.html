@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('报名表数据')" />
+    <th:block th:include="include :: layout-latest-css"/>
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-primary single disabled" onclick="formAllData()" shiro:hasPermission="system:formdata:list">
+                    <i class="fa fa-database"></i> 详细数据
+                </a>
+                <a class="btn btn-danger single disabled" onclick="removeAll()" shiro:hasPermission="system:formdata:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="exportTableExcel()" shiro:hasPermission="system:formdata:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+
+            <div class="col-sm-12 select-table table-striped hide" >
+                <table id="bootstrap-table2">
+                    <thead id="theadId"></thead>
+                    <tbody id="tbodyId"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+     <div class="modal inmodal" id="myModal"  role="dialog" aria-hidden="true">
+         <div class="modal-dialog modal-lg">
+             <div class="modal-content animated flipInY">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                     </button>
+
+                     <h4 class="font-bold">详细数据</h4>
+
+                 </div>
+                 <div class="modal-body">
+                     <div class="ibox float-e-margins">
+
+                         <div class="ibox-content">
+                             <table class="table table-hover no-margins" id="tBody"  style="table-layout:fixed;">
+                                 <tbody>
+
+
+                                 </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+    <th:block th:include="include :: footer" />
+     <th:block th:include="include :: layout-latest-js"/>
+     <!--表格导出JS-->
+     <script th:src="@{/js/jquery.table2excel.min.js}"></script>
+    <script th:inline="javascript">
+
+        var formField = '[(${formInfo.formField})]';
+        var formTitle = '[(${formInfo.formTitle})]';
+        var formName = '[(${formInfo.formName})]';
+        var formColumn = [[${formColumn}]];
+        var prefix = ctx + "system/form/formData";
+        var newFormColumn = new Array();
+        $.each(formColumn,function (idx,val) {
+            if(val.indexOf("h4")!= -1 || val.indexOf("id")!= -1){
+                return true;
+            }
+            newFormColumn.push(val);
+        })
+
+        $(function() {
+
+            $("#myModal").on("click","table button",findIpAdrees);
+
+            var fieldOption = new Array();
+            fieldOption.push({
+                radio:true
+            });
+            fieldOption.push({
+                field : 'id',
+                title : '编号',
+                visible: false
+            });
+
+            $.each(formField.split(","),function(index,value){
+                fieldOption.push( {
+                    field : newFormColumn[index],
+                    title : value,
+                    sortable: (newFormColumn[index] == "insert_time")?true:false,
+                    formatter: function (value, row, index) {
+                        return (value && value.length>25)?value.substr(0,25)+"...":value;
+                    }
+                })
+            });
+
+
+            var options = {
+                url: prefix + "/list/"+formName,
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                sortName: "insert_time",
+                sortOrder: "desc",
+                modalName: "报名数据",
+                singleSelect: true,
+                clickToSelect:true,
+                onDblClickRow:function (row,$element) {
+                    formAllData();
+                },
+                columns:fieldOption
+            };
+            $.table.init(options);
+        });
+
+        function formAllData() {
+            var i = 1;
+            var row=$("#bootstrap-table").bootstrapTable('getSelections');
+
+            var tBody = $("#tBody");
+            tBody.empty();
+
+            $.each(formField.split(","),function(index,value){
+                //2.1 构建tr对象
+                var tr = $("<tr></tr>");
+                //2.2 构建多个td对象
+
+                var td= "<td ><strong>"+value+"</strong></td><td  style='word-wrap:break-word;'>"+((row[0][newFormColumn[index]])?row[0][newFormColumn[index]]:'')+"</td>";
+                if(value=="ip"){
+                    td ="<td><strong>"+value+"</strong></td><td  style='word-wrap:break-word;'>"+((row[0][newFormColumn[index]])?row[0][newFormColumn[index]]:'')+ "<span style='margin-left: 10px'><button  class='btn btn-primary btn-sm'>查询真实地址</button></span>"+"</td>";
+                }
+                tr.append(td);
+                tr.data("value",row[0][newFormColumn[index]]);
+                tBody.append(tr);
+
+            });
+
+            $("#myModal").modal("show");
+        }
+        function findIpAdrees() {
+
+           var ip = $(this).parents("tr").data("value");
+           if(ip=="127.0.0.1"){
+               $.modal.msgSuccess("内网IP");
+               return;
+           }
+           $.modal.msg("正在查询,请稍等。。。");
+           $.get("http://ip-api.com/json/"+ip+"?lang=zh-CN",function (res) {
+
+               if(res.status == "success"){
+                   const adr = res.country+"-"+res.regionName+"-"+res.city;
+                   $.modal.alertSuccess(adr);
+               }else{
+                   $.modal.alertError(res.message);
+               }
+           })
+        }
+        function removeAll() {
+            var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+            if (rows.length == 0) {
+                $.modal.alertWarning("请至少选择一条记录");
+                return;
+            }
+            $.modal.confirm("确认要删除选中的" + rows.length + "条数据吗?", function () {
+                var url = $.table._option.removeUrl;
+                var data = {"ids": rows.join(),"formName":formName};
+                $.operate.submit(url, "post", "json", data);
+            });
+        }
+        
+        function exportTableExcel() {
+            $.post(prefix + "/export", {"formName":formName}, function(result) {
+                if (result.code == 0) {
+                    doSetTableBodyThead();
+                    doSetTableBodyRows(result.rows);
+                    $("#bootstrap-table2").table2excel({
+                        exclude  : ".noExl", //过滤位置的 css 类名
+                        filename :  formTitle+ new Date().getTime()+".xls" //文件名称
+                    });
+                } else {
+                    $.modal.msg(result.msg);
+                }
+            });
+
+
+
+            /*   $("#bootstrap-table2").table2excel({
+                   exclude  : ".noExl", //过滤位置的 css 类名
+                   filename :  formTitle+new Date().getTime()+ ".xls" //文件名称
+               });*/
+        }
+
+        //修改表头数据
+        function doSetTableBodyThead() {
+
+            //1.获取Tbody对象并清空
+            var tHead = $("#theadId");
+            tHead.empty();
+            var tr = $("<tr></tr>");
+            for(var i in formField.split(",")){
+                var th = "<th>"+formField.split(",")[i]+"</th>";
+                tr.append(th);
+            }
+            //2.4 将tr追加到tbody中
+            tHead.append(tr);
+        }
+
+        //呈现当前页记录
+        function doSetTableBodyRows(formDataList) {
+            //1.获取Tbody对象并清空
+            var tBody = $("#tbodyId");
+            tBody.empty();
+            //2.迭代数据并显示在tbody中
+            for ( var i in formDataList) {
+                //2.1 构建tr对象
+                var tr = $("<tr></tr>");
+                //2.2 构建多个td对象
+                var tds = doCreateTds(formDataList[i]);
+                //2.3 将td追加到tr中
+                tr.append(tds);
+                //2.4 将tr追加到tbody中
+                tBody.append(tr);
+            }
+        }
+        function doCreateTds(row) {
+            var tds="";
+            $.each(row,function(key,value){
+                if(key.indexOf("h4")!=-1 || key.indexOf("id")!=-1 ){
+                    return true;
+                }
+                tds=tds+"<td>"+(value?value:"")+"</td>";
+            })
+            return tds;
+        }
+    </script>
+</body>
+</html>

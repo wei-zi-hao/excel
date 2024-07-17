@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ek.project.system.mailConfig.mapper.MailConfigMapper">
+    
+    <resultMap type="MailConfig" id="MailConfigResult">
+        <result property="smtpAdress"    column="smtp_adress"    />
+        <result property="smtpPort"    column="smtp_port"    />
+        <result property="sendMail"    column="send_mail"    />
+        <result property="authCode"    column="auth_code"    />
+        <result property="sendName"    column="send_name"    />
+        <result property="sendStyle"    column="send_style"    />
+    </resultMap>
+
+    <sql id="selectMailConfigVo">
+        select smtp_adress, smtp_port, send_mail, auth_code, send_name, send_style from mail_config
+    </sql>
+
+    <select id="selectMailConfigList" parameterType="MailConfig" resultMap="MailConfigResult">
+        <include refid="selectMailConfigVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectMailConfigById" parameterType="String" resultMap="MailConfigResult">
+        <include refid="selectMailConfigVo"/>
+        where id = 1
+    </select>
+        
+    <insert id="insertMailConfig" parameterType="MailConfig">
+        insert into mail_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="smtpAdress != null  and smtpAdress != ''">smtp_adress,</if>
+            <if test="smtpPort != null  and smtpPort != ''">smtp_port,</if>
+            <if test="sendMail != null  and sendMail != ''">send_mail,</if>
+            <if test="authCode != null  and authCode != ''">auth_code,</if>
+            <if test="sendName != null  and sendName != ''">send_name,</if>
+            <if test="sendStyle != null  and sendStyle != ''">send_style,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="smtpAdress != null  and smtpAdress != ''">#{smtpAdress},</if>
+            <if test="smtpPort != null  and smtpPort != ''">#{smtpPort},</if>
+            <if test="sendMail != null  and sendMail != ''">#{sendMail},</if>
+            <if test="authCode != null  and authCode != ''">#{authCode},</if>
+            <if test="sendName != null  and sendName != ''">#{sendName},</if>
+            <if test="sendStyle != null  and sendStyle != ''">#{sendStyle},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMailConfig" parameterType="MailConfig">
+        update mail_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="smtpAdress != null  and smtpAdress != ''">smtp_adress = #{smtpAdress},</if>
+            <if test="smtpPort != null  and smtpPort != ''">smtp_port = #{smtpPort},</if>
+            <if test="sendMail != null  and sendMail != ''">send_mail = #{sendMail},</if>
+            <if test="authCode != null  and authCode != ''">auth_code = #{authCode},</if>
+            <if test="sendName != null  and sendName != ''">send_name = #{sendName},</if>
+            <if test="sendStyle != null  and sendStyle != ''">send_style = #{sendStyle},</if>
+        </trim>
+        where id = 1
+    </update>
+
+    <delete id="deleteMailConfigById" parameterType="String">
+        delete from mail_config where smtp_adress = #{smtpAdress}
+    </delete>
+
+    <delete id="deleteMailConfigByIds" parameterType="String">
+        delete from mail_config where smtp_adress in 
+        <foreach item="smtpAdress" collection="array" open="(" separator="," close=")">
+            #{smtpAdress}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <th:block th:include="include :: header('文件上传')" />
+    <th:block th:include="include :: bootstrap-fileinput-css" />
+    <th:block th:include="include :: header('左右互选组件')" />
+    <th:block th:include="include :: bootstrap-duallistbox-css" />
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div id="selectFile" class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Excel标色</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="alert alert-success">
+                        请确保上传的第一个文件为旧表单,第二个文件为新表单,否则会导致标注失败.
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <label class="font-noraml">多文件上传</label>
+                        <div class="file-loading">
+                            <input id="multipleFile" name="files" type="file" multiple>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="selectExcel" class="row hide">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>符合条件的sheet</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <form id="form" action="#" class="wizard-big">
+                                <select class="form-control dual_select" multiple>
+
+                                </select>
+                            </form>
+                            <hr>
+                            <div class="form-group">
+                                <button id="submitSheet" class="btn btn-primary " type="button"><i class="fa fa-check"></i>&nbsp;提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: bootstrap-fileinput-js" />
+<th:block th:include="include :: bootstrap-duallistbox-js" />
+<script th:inline="javascript">
+    $(document).ready(function () {
+        var workbookOldKey;
+        var workbookNewKey;
+        var newExcelName;
+        var oldExcelName;
+
+
+        var selectorx = $('.dual_select').bootstrapDualListbox({
+            nonSelectedListLabel: '未选择',
+            selectedListLabel: '已选择',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: false,           // 出现一个剪头，表示可以一次选择一个
+            filterTextClear: '展示所有',
+            moveSelectedLabel: "添加",
+            moveAllLabel: '添加所有',
+            removeSelectedLabel: "移除",
+            removeAllLabel: '移除所有',
+            infoText: '共{0}个',
+            infoTextEmpty:"列表为空",
+            showFilterInputs: false,       // 是否带搜索
+            selectorMinimalHeight: 160
+        });
+
+        // 上传
+        $("#multipleFile").fileinput({
+            uploadUrl: ctx + 'common/upload',
+            maxFileCount: 2,
+            minFileCount: 2,
+            uploadAsync: false,
+            allowedFileExtensions: ['xls', 'xlsx'],
+            layoutTemplates: {
+                actionUpload: '', // 去除上传预览缩略图中的上传图片图标
+            }
+        }).on('filebatchuploadsuccess', function (event, data, previewId, index) {
+            var rsp = data.response;
+            workbookOldKey = rsp.workbookOldKey;
+            workbookNewKey = rsp.workbookNewKey;
+            newExcelName = rsp.newExcelName;
+            oldExcelName = rsp.oldExcelName;
+            $(this).fileinput('clear');
+            $.modal.msgSuccess("上传成功！")
+            $("#selectExcel").removeClass("hide")
+            $("#selectFile").addClass("hide")
+            // 创建一个新的option元素
+            var selectElement = $(".dual_select");
+            $.each(rsp.excelList, function(index, item) {
+                selectElement.append(new Option(item, item));
+            });
+            selectorx.bootstrapDualListbox('refresh', true)
+        }).on('fileremoved', function (event, id, index) {
+            $("input[name='" + event.currentTarget.id + "']").val('')
+        })
+
+        $("#submitSheet").on("click", function() {
+            // 触发Ajax请求
+            var selectedValues = selectorx.val();
+            // selectedValues 是一个包含所有选中值的数组
+            console.log(selectedValues);
+            if(selectedValues == null){
+                $.modal.alertError("请至少选择一个sheet");
+                return;
+            }
+            var excelDetail = {
+                workbookOldKey: workbookOldKey,
+                workbookNewKey: workbookNewKey,
+                oldExcelName: oldExcelName,
+                newExcelName: newExcelName,
+                selectSheet: selectedValues // 这是一个包含两个工作表名称的数组
+            };
+            $.modal.loading("解析上色中...");
+            $.ajax({
+                url: ctx + 'excel/handle', // 替换为你的API URL
+                type: "POST", // 请求类型（GET、POST等）
+                contentType: 'application/json', // 指定内容类型为 JSON
+                data: JSON.stringify(excelDetail), // 将 DTO 对象转换为 JSON 字符串
+                success: function(response) {
+                    // 请求成功时执行的操作
+                    console.log("请求成功:", response);
+                    // 在这里处理返回的数据
+                    $.modal.closeLoading();
+
+                    console.log(response.fileName);
+
+                    window.location.href = ctx + "common/download?fileName=" + encodeURI(response.fileName);
+
+                    $.modal.alertSuccess('导出成功,请到浏览器下载查看标注后的文档. 5秒即将刷新页面...')
+
+                    setTimeout(function() {
+                        $.modal.msgReload("正在刷新数据请稍候……", modal_status.SUCCESS);
+                    }, 5000);
+
+
+                },
+                error: function(xhr, status, error) {
+                    // 请求失败时执行的操作
+                    console.error("请求失败:", status, error);
+                    $.modal.closeLoading();
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

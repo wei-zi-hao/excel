@@ -1,0 +1,1096 @@
+{
+  "success": true,
+  "code": 200,
+  "msg": null,
+  "data": {
+    "stuExamQueVoList": [
+      {
+        "queId": "1683758524651290626",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "阿里巴巴集团成立淘宝网，进军C2C市场处于电子商务发展的哪个阶段？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "工具阶段"
+          },
+          {
+            "title": "B",
+            "name": "渠道阶段"
+          },
+          {
+            "title": "C",
+            "name": "基础设施阶段"
+          },
+          {
+            "title": "D",
+            "name": "经济体阶段"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524760342532",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "敦煌网于2004年创立，致力于帮助中国(  )通过跨境电商平台走向全球市场。",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "大型企业"
+          },
+          {
+            "title": "B",
+            "name": "国有企业"
+          },
+          {
+            "title": "C",
+            "name": "中小企业"
+          },
+          {
+            "title": "D",
+            "name": "微型企业"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524777119747",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "以下哪个不属于移动社交电商？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "蘑菇街"
+          },
+          {
+            "title": "B",
+            "name": "小红书"
+          },
+          {
+            "title": "C",
+            "name": "拼多多"
+          },
+          {
+            "title": "D",
+            "name": "淘宝"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524810674180",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "以下不属于条形码技术的优点的是？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "输入速度读快"
+          },
+          {
+            "title": "B",
+            "name": "可靠性高"
+          },
+          {
+            "title": "C",
+            "name": "采集信息量大"
+          },
+          {
+            "title": "D",
+            "name": "易于灰尘污染"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524831645700",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "网络营销中，（  ）系统被认为是一种常用的客户在线服务工具。",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "FAQ"
+          },
+          {
+            "title": "B",
+            "name": "客服"
+          },
+          {
+            "title": "C",
+            "name": "满意度"
+          },
+          {
+            "title": "D",
+            "name": "程序"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524844228610",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "LBS营销是一种（  ）营销。",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "精准"
+          },
+          {
+            "title": "B",
+            "name": "具体"
+          },
+          {
+            "title": "C",
+            "name": "内容"
+          },
+          {
+            "title": "D",
+            "name": "精确"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524869394437",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "“头条号”营销的技巧不包括？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "优化关键词"
+          },
+          {
+            "title": "B",
+            "name": "形成微信矩阵"
+          },
+          {
+            "title": "C",
+            "name": "精准挖掘客户"
+          },
+          {
+            "title": "D",
+            "name": "增强粉丝黏性"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524986834946",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "利用什么命令可以快速调整偏色的图片？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "自然饱和度"
+          },
+          {
+            "title": "B",
+            "name": "色彩平衡"
+          },
+          {
+            "title": "C",
+            "name": "通道混合器"
+          },
+          {
+            "title": "D",
+            "name": "色相/饱和度"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525053943812",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "按住哪个键单击某个路径层的缩览图可隐藏其中的所有路径？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "Esc"
+          },
+          {
+            "title": "B",
+            "name": "Shift"
+          },
+          {
+            "title": "C",
+            "name": "Ctrl"
+          },
+          {
+            "title": "D",
+            "name": "Alt"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525087498243",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "当执行完一个滤镜操作后，按哪个组合键，可快速重复上次执行的滤镜操作？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "Ctrl+U"
+          },
+          {
+            "title": "B",
+            "name": "Ctrl+B"
+          },
+          {
+            "title": "C",
+            "name": "Shift+Ctrl+U"
+          },
+          {
+            "title": "D",
+            "name": "Ctrl+F"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525112664066",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "用于平滑地混杂像素，创建火焰、波浪等效果的工具是？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "镜像工具"
+          },
+          {
+            "title": "B",
+            "name": "湍流工具"
+          },
+          {
+            "title": "C",
+            "name": "冻结蒙版工具"
+          },
+          {
+            "title": "D",
+            "name": "左推工具"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525167190020",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "对图像进行自由变换的快捷键是？",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "Shift+T"
+          },
+          {
+            "title": "B",
+            "name": "Alt+T"
+          },
+          {
+            "title": "C",
+            "name": "Ctrl+T"
+          },
+          {
+            "title": "D",
+            "name": "Shift+Ctrl+T"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525179772931",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "在 Photoshop 中，选区是可以保存的，它保存在( )",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "内存中"
+          },
+          {
+            "title": "B",
+            "name": "图像中"
+          },
+          {
+            "title": "C",
+            "name": "图层中"
+          },
+          {
+            "title": "D",
+            "name": "通道中"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525183967236",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "在用 Photoshop CS 编辑图像时，只能用来选择规则图形的工具是（ ）",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "矩形选框工具"
+          },
+          {
+            "title": "B",
+            "name": "魔棒工具"
+          },
+          {
+            "title": "C",
+            "name": "钢笔工具"
+          },
+          {
+            "title": "D",
+            "name": "套索工具"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525192355842",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "Photoshop 中，在图层面板中不可以调节的参数是( )",
+        "queType": 1,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "透明度"
+          },
+          {
+            "title": "B",
+            "name": "编辑锁定"
+          },
+          {
+            "title": "C",
+            "name": "显示隐藏"
+          },
+          {
+            "title": "D",
+            "name": "图层大小"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524802285570",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "企业自营物流的优势包括？",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "掌握控制权"
+          },
+          {
+            "title": "B",
+            "name": "利用企业原有的物流资源"
+          },
+          {
+            "title": "C",
+            "name": "降低交易成本"
+          },
+          {
+            "title": "D",
+            "name": "提高企业品牌价值"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524861005828",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "网络视频营销的表现形式包括？",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "网络短视频营销"
+          },
+          {
+            "title": "B",
+            "name": "网络视频短剧营销"
+          },
+          {
+            "title": "C",
+            "name": "微电影营销"
+          },
+          {
+            "title": "D",
+            "name": "视频博客营销"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524915531779",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "常用的选区编辑命令有？",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "选取整幅图像"
+          },
+          {
+            "title": "B",
+            "name": "取消选区"
+          },
+          {
+            "title": "C",
+            "name": "重新选择选区"
+          },
+          {
+            "title": "D",
+            "name": "反选选区"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524982640641",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "“色彩平衡”可以单独调整图像的（   ），使图像恢复正常的色彩平衡关系。",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "暗调"
+          },
+          {
+            "title": "B",
+            "name": "中间调"
+          },
+          {
+            "title": "C",
+            "name": "色调"
+          },
+          {
+            "title": "D",
+            "name": "高光的色彩"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525083303940",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "用户可在“新建通道”对话框设置？",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "通道名称"
+          },
+          {
+            "title": "B",
+            "name": "通道颜色"
+          },
+          {
+            "title": "C",
+            "name": "不透明度"
+          },
+          {
+            "title": "D",
+            "name": "自动亮度"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525121052674",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "消失点滤镜中的其他工具包括？",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "选框工具"
+          },
+          {
+            "title": "B",
+            "name": "图章工具"
+          },
+          {
+            "title": "C",
+            "name": "画笔工具"
+          },
+          {
+            "title": "D",
+            "name": "吸管工具"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525137829890",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "图层调板上可以设定下列哪些选项?",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "不透亮度"
+          },
+          {
+            "title": "B",
+            "name": "混合模式"
+          },
+          {
+            "title": "C",
+            "name": "图层蒙版"
+          },
+          {
+            "title": "D",
+            "name": "图层效果"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525150412801",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "Photoshop中在工具箱中，当使用哪些工具的时候按住Ctrl键可以临时的切换为移动工具?",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "画笔工具"
+          },
+          {
+            "title": "B",
+            "name": "钢笔工具"
+          },
+          {
+            "title": "C",
+            "name": "缩放工具"
+          },
+          {
+            "title": "D",
+            "name": "手形工具"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525183967234",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "当我们在Photoshop中建立新图像时，可以为图像设定？",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "图像的名称"
+          },
+          {
+            "title": "B",
+            "name": "图像的大小"
+          },
+          {
+            "title": "C",
+            "name": "图像的色彩模式"
+          },
+          {
+            "title": "D",
+            "name": "图像的存储格式"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525188161537",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "Photoshop中相对于CMYK模式，在RGB模式中工作具有哪些优点?",
+        "queType": 2,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "能够使用更多命令与工具"
+          },
+          {
+            "title": "B",
+            "name": "节省内存，提高运行效率"
+          },
+          {
+            "title": "C",
+            "name": "保存更多的颜色信息"
+          },
+          {
+            "title": "D",
+            "name": "印刷清晰"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524781314050",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "狭义上的电子商务活动泛指一切与商务交易有关的活动，如营销、推广、支付及物流等。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524982640643",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "照片滤镜”命令是模仿在相机镜头前面加一个彩色滤镜，用户可以通过选择不同颜色的滤镜调整图像的颜色。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758524995223555",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "“渐变映射”命令会首先把图像转换为灰度，然后用设置的渐变色来映射图像中的各级灰度，从而制作出特殊图像效果。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525007806468",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "斜面和浮雕样式是Photoshop图层样式中最复杂的。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525062332421",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "在编辑图像时，如果输入的文字较少，可以通过直接输入点文本的方式来输入文字。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525091692548",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "用户可以通过调整滤镜层的顺序，来改变滤镜应用效果。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525112664069",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "选择“重建工具”，在变形后的图像区域单击或拖动可恢复图像。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525116858370",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "“蒙版选项”设置区用于取消、反相被冻结区域（也称为被蒙版区域），或者冻结整幅图像。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525129441282",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "左右拖动“垂直透视”滑块，可以在图像的顶端或底边校正垂直透视。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1683758525133635586",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": null,
+        "title": "Photoshop 中，光照滤镜效果只在 RGB 模式图像应用。",
+        "queType": 3,
+        "queOptionDtoList": [
+          {
+            "title": "A",
+            "name": "正确"
+          },
+          {
+            "title": "B",
+            "name": "错误"
+          }
+        ],
+        "marks": "20.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1737034696738570241",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": [
+          {
+            "sub": "1",
+            "ans": []
+          }
+        ],
+        "shortAnswerWay": null,
+        "title": "电子商务实际上是一种（   ）活动。",
+        "queType": 4,
+        "queOptionDtoList": null,
+        "marks": "2.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1737034697145417730",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": [
+          {
+            "sub": "1",
+            "ans": []
+          }
+        ],
+        "shortAnswerWay": null,
+        "title": "目前在中小型网络中，使用得最多的是（   ）拓扑结构。",
+        "queType": 4,
+        "queOptionDtoList": null,
+        "marks": "2.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1737034697149612034",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": [
+          {
+            "sub": "1",
+            "ans": []
+          }
+        ],
+        "shortAnswerWay": null,
+        "title": "（   ）采用公开密钥加密和数字证书对消费者和商家进行验证。",
+        "queType": 4,
+        "queOptionDtoList": null,
+        "marks": "2.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1737034697153806337",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": [
+          {
+            "sub": "1",
+            "ans": []
+          }
+        ],
+        "shortAnswerWay": null,
+        "title": "消费者通过网络订阅企业提供的无形商品和服务的模式属于（   ）。",
+        "queType": 4,
+        "queOptionDtoList": null,
+        "marks": "2.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1737034697158000642",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": [
+          {
+            "sub": "1",
+            "ans": []
+          }
+        ],
+        "shortAnswerWay": null,
+        "title": "在电子支付架构中，（   ）负责电子支付工具的收付与结算。",
+        "queType": 4,
+        "queOptionDtoList": null,
+        "marks": "2.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1735105132298825729",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": 1,
+        "title": "电子商务发展过程中存在的问题?",
+        "queType": 5,
+        "queOptionDtoList": null,
+        "marks": "10.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      },
+      {
+        "queId": "1735105132311408641",
+        "fileType": null,
+        "fullFileUrl": null,
+        "fillAnswerDto": null,
+        "shortAnswerWay": 1,
+        "title": "电子商务下的新型物流应具备的条件有哪些?",
+        "queType": 5,
+        "queOptionDtoList": [],
+        "marks": "10.0",
+        "consumeAnswerList": [],
+        "stemList": null
+      }
+    ],
+    "queIdList": null
+  }
+}

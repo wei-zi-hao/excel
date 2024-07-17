@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ek.project.system.mail.mapper.FormMailMapper">
+
+
+
+    <insert id="batchMailForm">
+        insert into form_mail(mail_id, form_info_id) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.mailId},#{item.formId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteFormUserById">
+        delete from form_mail where form_info_id = #{id}
+    </delete>
+
+    <delete id="deleteAuthMail" >
+        delete from form_mail where mail_id=#{mailId} and form_info_id=#{formId}
+    </delete>
+
+    <delete id="deleteUserFormInfos">
+        delete from form_mail where form_info_id=#{formId} and mail_id in
+        <foreach collection="mailIds" item="mailId" open="(" separator="," close=")">
+            #{mailId}
+        </foreach>
+    </delete>
+    <delete id="deleteMailFormInfos">
+        delete from form_mail where form_info_id=#{formId} and mail_id in
+        <foreach collection="mailIds" item="mailId" open="(" separator="," close=")">
+            #{mailId}
+        </foreach>
+
+    </delete>
+
+</mapper>
